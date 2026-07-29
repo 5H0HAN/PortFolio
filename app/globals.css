@@ -5273,3 +5273,10 @@ body:has(.keystatic-shell) main {
     font-size: 0.78rem;
   }
 }
+/* Lighthouse: keep compact operational metadata readable in both themes. */
+html .ops-field-foot span,
+html .identity-strip span,
+html .home-tool-callout .kicker,
+html .metadata-line {
+  color: var(--text-muted);
+}

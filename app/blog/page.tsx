@@ -16,12 +16,12 @@ function getCategory(searchParams?: SearchParams) {
   return value?.trim() ?? "";
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   searchParams,
 }: {
-  searchParams?: SearchParams;
-}): Metadata {
-  const category = getCategory(searchParams);
+  searchParams?: Promise<SearchParams>;
+}): Promise<Metadata> {
+  const category = getCategory(await searchParams);
   const metadata = createPageMetadata({
     title: category
       ? `${category} Articles`
@@ -52,9 +52,9 @@ export function generateMetadata({
 export default async function BlogPage({
   searchParams,
 }: {
-  searchParams?: SearchParams;
+  searchParams?: Promise<SearchParams>;
 }) {
-  const activeCategory = getCategory(searchParams);
+  const activeCategory = getCategory(await searchParams);
   const posts = await getAllPosts();
   const categories = await getBlogCategories(posts);
   const filteredPosts = activeCategory

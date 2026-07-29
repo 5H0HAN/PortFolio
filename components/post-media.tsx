@@ -1,4 +1,6 @@
 import type { BlogMediaType } from "@/lib/blog";
+import Image from "next/image";
+import { createHash } from "node:crypto";
 
 type PostMediaProps = {
   type?: BlogMediaType;
@@ -6,6 +8,13 @@ type PostMediaProps = {
   alt?: string;
   caption?: string;
 };
+
+const optimizedImageHosts = new Set([
+  "images.unsplash.com",
+  "images.pexels.com",
+  "i.imgur.com",
+  "media.tenor.com",
+]);
 
 function getSafeHttpsUrl(value?: string) {
   if (!value) {
@@ -18,6 +27,40 @@ function getSafeHttpsUrl(value?: string) {
   } catch {
     return null;
   }
+}
+
+function canOptimizeImage(url: URL) {
+  return (
+    optimizedImageHosts.has(url.hostname) ||
+    url.hostname.endsWith(".imgbox.com") ||
+    url.hostname.endsWith(".giphy.com")
+  );
+}
+
+function getCanonicalImageUrl(url: URL) {
+  if (
+    url.hostname === "commons.wikimedia.org" &&
+    url.pathname.startsWith("/wiki/Special:Redirect/file/")
+  ) {
+    const encodedFileName = url.pathname.split("/").at(-1);
+    if (encodedFileName) {
+      const fileName = decodeURIComponent(encodedFileName).replaceAll(" ", "_");
+      const digest = createHash("md5").update(fileName).digest("hex");
+      return new URL(
+        `https://upload.wikimedia.org/wikipedia/commons/${digest[0]}/${digest.slice(0, 2)}/${encodeURIComponent(fileName)}`,
+      );
+    }
+  }
+
+  return url;
+}
+
+function getImageDimensions(url: URL) {
+  if (url.pathname.endsWith("/Email_Authentication_03d.png")) {
+    return { width: 606, height: 124 };
+  }
+
+  return { width: 1600, height: 900 };
 }
 
 function getYouTubeEmbedUrl(value?: string) {
@@ -72,6 +115,10 @@ export function PostMedia({
   if (type === "youtube" && !youtubeUrl) {
     return null;
   }
+  const imageUrl = getCanonicalImageUrl(safeUrl);
+  const imageDimensions = getImageDimensions(imageUrl);
+  const shouldOptimizeImage =
+    type === "image" && canOptimizeImage(imageUrl);
 
   return (
     <figure className={`article-media article-media-${type}`}>
@@ -92,12 +139,27 @@ export function PostMedia({
           preload="metadata"
           aria-label={alt || "Article video"}
         />
+      ) : shouldOptimizeImage ? (
+        <Image
+          src={imageUrl.toString()}
+          alt={alt}
+          width={imageDimensions.width}
+          height={imageDimensions.height}
+          sizes="(max-width: 900px) calc(100vw - 40px), min(1286px, calc(100vw - 64px))"
+          priority
+          fetchPriority="high"
+          referrerPolicy="no-referrer"
+        />
       ) : (
         <img
-          src={safeUrl.toString()}
+          src={imageUrl.toString()}
           alt={alt}
-          loading="lazy"
+          width={imageDimensions.width}
+          height={imageDimensions.height}
+          loading="eager"
           decoding="async"
+          fetchPriority="high"
+          crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
       )}
