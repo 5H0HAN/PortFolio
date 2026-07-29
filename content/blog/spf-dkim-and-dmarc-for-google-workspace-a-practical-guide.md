@@ -25,7 +25,7 @@ mediaCaption: >-
   Email authentication concept diagram by Macquigg, via Wikimedia Commons,
   licensed CC BY-SA 2.5.
 ---
-![](CleanShot%202026-07-30%20at%2005.56.33@2x.png)\
+![shohan-github-icon](CleanShot%202026-07-30%20at%2005.56.33@2x.png)\
 \
 A message can look perfectly legitimate and still fail authentication. The visible From address is only one identity in an SMTP transaction, and receiving systems compare that identity with DNS, the sending server, and cryptographic signatures before deciding how much trust to give the message.
 
