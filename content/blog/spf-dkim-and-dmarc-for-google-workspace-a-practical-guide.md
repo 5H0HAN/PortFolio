@@ -25,6 +25,8 @@ mediaCaption: >-
   Email authentication concept diagram by Macquigg, via Wikimedia Commons,
   licensed CC BY-SA 2.5.
 ---
+![](CleanShot%202026-07-30%20at%2005.56.33@2x.png)\
+\
 A message can look perfectly legitimate and still fail authentication. The visible From address is only one identity in an SMTP transaction, and receiving systems compare that identity with DNS, the sending server, and cryptographic signatures before deciding how much trust to give the message.
 
 For a Google Workspace domain, SPF, DKIM, and DMARC form a chain. SPF authorizes sending infrastructure, DKIM proves that an authorized system signed the message, and DMARC checks whether at least one of those results aligns with the domain the recipient actually sees in the From header.
