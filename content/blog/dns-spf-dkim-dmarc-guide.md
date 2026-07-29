@@ -162,82 +162,71 @@ The pct tag applies to enforcement and is useful during a controlled rollout. Do
 
 ## How to verify the setup
 
-- Check the public DNS answers
+### Check the public DNS answers
 
-- Run the read-only Workspace DNS Checker at https://shohanbiswas.com/tools/workspace-check with your bare domain and the correct DKIM selector. Confirm that the result seen from public resolvers matches the values in your DNS console.
+Run the read-only Workspace DNS Checker at https://shohanbiswas.com/tools/workspace-check with your bare domain and the correct DKIM selector. Confirm that the result seen from public resolvers matches the values in your DNS console.
 
-- Check for one SPF policy at the root, the complete DKIM key at selector._domainkey, and one DMARC policy at _dmarc. During propagation, compare more than one resolver before assuming a provider saved the change incorrectly.
+Check for one SPF policy at the root, the complete DKIM key at selector._domainkey, and one DMARC policy at _dmarc. During propagation, compare more than one resolver before assuming a provider saved the change incorrectly.
 
-- Inspect a real received message
+### Inspect a real received message
 
-- Send from the system being tested to a mailbox outside the source account. In Gmail, open the message menu and choose Show original. Look for spf=pass, dkim=pass, and dmarc=pass, then inspect the authenticated domains rather than stopping at the word pass.
+Send from the system being tested to a mailbox outside the source account. In Gmail, open the message menu and choose Show original. Look for spf=pass, dkim=pass, and dmarc=pass, then inspect the authenticated domains rather than stopping at the word pass.
 
-- The DKIM result should show a signing domain aligned with the visible From domain. The SPF result should identify the envelope domain and sending IP. The DMARC result confirms whether an aligned path passed.
+The DKIM result should show a signing domain aligned with the visible From domain. The SPF result should identify the envelope domain and sending IP. The DMARC result confirms whether an aligned path passed.
 
-- Test every sending stream
+### Test every sending stream
 
 - A normal message sent from the Gmail web interface.
-
 - A website form or application notification.
-
 - A CRM, help desk, invoicing system, or marketing platform.
-
 - Messages sent through an SMTP relay or outbound gateway.
-
 - A forwarded message when forwarding is part of the real workflow.
 
-- Read DMARC aggregate reports
+### Read DMARC aggregate reports
 
-- Aggregate reports reveal source IPs, message counts, SPF and DKIM outcomes, alignment, and the policy applied. Group the data by known service, investigate unknown volume, and correct legitimate failures before enforcement. A reporting dashboard is often easier to operate than reading raw XML files by hand.
+Aggregate reports reveal source IPs, message counts, SPF and DKIM outcomes, alignment, and the policy applied. Group the data by known service, investigate unknown volume, and correct legitimate failures before enforcement. A reporting dashboard is often easier to operate than reading raw XML files by hand.
 
-- ## Troubleshooting common failures
+## Troubleshooting common failures
 
-- ### SPF returns permerror
+### SPF returns permerror
 
-- Look for multiple SPF TXT records, malformed syntax, recursive includes, or more than 10 query-causing mechanisms and modifiers. Consolidate the policy and remove services that no longer send. SPF flattening can create maintenance risk because provider IP ranges change, so use it only with an update process you trust.
+Look for multiple SPF TXT records, malformed syntax, recursive includes, or more than 10 query-causing mechanisms and modifiers. Consolidate the policy and remove services that no longer send. SPF flattening can create maintenance risk because provider IP ranges change, so use it only with an update process you trust.
 
-- ### SPF passes but DMARC fails
+### SPF passes but DMARC fails
 
-- Compare the SPF-authenticated envelope domain with the visible From domain. A provider-owned bounce domain can pass SPF without aligning. Configure a custom return-path at the provider when available, or rely on aligned DKIM.
+Compare the SPF-authenticated envelope domain with the visible From domain. A provider-owned bounce domain can pass SPF without aligning. Configure a custom return-path at the provider when available, or rely on aligned DKIM.
 
-- ### The DKIM TXT record exists but messages are unsigned
+### The DKIM TXT record exists but messages are unsigned
 
-- Publishing the key is only half the setup. In Google Workspace, return to Authenticate email and start authentication after the DNS record resolves. For third-party senders, enable signing inside that platform and confirm it uses your domain in the d= tag.
+Publishing the key is only half the setup. In Google Workspace, return to Authenticate email and start authentication after the DNS record resolves. For third-party senders, enable signing inside that platform and confirm it uses your domain in the d= tag.
 
-- ### DKIM fails after a gateway or mailing list
+### DKIM fails after a gateway or mailing list
 
-- Inspect whether the intermediary adds a footer, rewrites the subject, changes MIME encoding, or modifies signed headers. Adjust the mail flow so signing happens after modifications when you control the path. When forwarding breaks SPF, an intact aligned DKIM signature often preserves DMARC.
+Inspect whether the intermediary adds a footer, rewrites the subject, changes MIME encoding, or modifies signed headers. Adjust the mail flow so signing happens after modifications when you control the path. When forwarding breaks SPF, an intact aligned DKIM signature often preserves DMARC.
 
-- ### DMARC reports show an unknown sender
+### DMARC reports show an unknown sender
 
-- Do not authorize it immediately. Correlate the source IP, reverse DNS, message volume, business owner, and service documentation. It may be an overlooked legitimate platform, a forwarding artifact, or unauthorized spoofing. Authorization should follow ownership evidence.
+Do not authorize it immediately. Correlate the source IP, reverse DNS, message volume, business owner, and service documentation. It may be an overlooked legitimate platform, a forwarding artifact, or unauthorized spoofing. Authorization should follow ownership evidence.
 
-- ### Everything passes, but mail still lands in spam
+### Everything passes, but mail still lands in spam
 
-- Authentication is not a reputation reset. Review consent, list hygiene, complaint rate, bounce handling, content, links, domain and IP reputation, sending consistency, PTR records, TLS, unsubscribe behavior, and sudden changes in volume. Use Gmail Postmaster Tools when the sending volume provides enough data.
+Authentication is not a reputation reset. Review consent, list hygiene, complaint rate, bounce handling, content, links, domain and IP reputation, sending consistency, PTR records, TLS, unsubscribe behavior, and sudden changes in volume. Use Gmail Postmaster Tools when the sending volume provides enough data.
 
-- ## Current Gmail sender expectations
+## Current Gmail sender expectations
 
-- Google's sender guidelines require all senders to Gmail accounts to use SPF or DKIM. Senders delivering more than 5,000 messages per day to personal Gmail accounts must use SPF, DKIM, and DMARC, and direct mail must align the visible From domain with SPF or DKIM. Marketing and subscription mail at that volume also needs one-click unsubscribe.
+Google's sender guidelines require all senders to Gmail accounts to use SPF or DKIM. Senders delivering more than 5,000 messages per day to personal Gmail accounts must use SPF, DKIM, and DMARC, and direct mail must align the visible From domain with SPF or DKIM. Marketing and subscription mail at that volume also needs one-click unsubscribe.
 
-- Google additionally calls for valid forward and reverse DNS for sending infrastructure, TLS, properly formatted messages, and low user-reported spam rates. These requirements show why a DNS-only test is a readiness assessment rather than a guarantee of delivery.
+Google additionally calls for valid forward and reverse DNS for sending infrastructure, TLS, properly formatted messages, and low user-reported spam rates. These requirements show why a DNS-only test is a readiness assessment rather than a guarantee of delivery.
 
-- ## Operational checklist
+## Operational checklist
 
 - Maintain a named owner and inventory for every sending service.
-
 - Keep exactly one SPF policy per hostname and stay within the evaluation limit.
-
 - Use DKIM on every capable platform and prefer 2048-bit keys when supported.
-
 - Confirm the signing domain and return-path alignment, not only pass or fail.
-
 - Collect DMARC aggregate reports before enforcement.
-
 - Increase quarantine or reject gradually and document each change.
-
 - Retest after migrations, new vendors, domain changes, gateways, or footer rules.
-
 - Remove retired senders and rotate DKIM keys as part of ongoing maintenance.
 
 A reliable configuration is not the longest DNS record. It is the smallest accurate policy that represents the systems your organization actually operates, paired with evidence from real messages and ongoing reports.
