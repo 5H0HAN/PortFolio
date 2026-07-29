@@ -1,0 +1,45 @@
+{
+  "name": "shohan-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Shohan Biswas portfolio, Markdown blog, and public email infrastructure tools.",
+  "author": "Shohan Biswas",
+  "license": "UNLICENSED",
+  "packageManager": "pnpm@11.10.0",
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/5H0HAN/PortFolio.git"
+  },
+  "homepage": "https://shohanbiswas.com",
+  "bugs": {
+    "url": "https://github.com/5H0HAN/PortFolio/issues"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^10.0.0",
+    "remark-gfm": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.12",
+    "@types/react": "^18.3.7",
+    "@types/react-dom": "^18.3.7",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.5",
+    "typescript": "^5.5.4"
+  }
+}

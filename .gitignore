@@ -1,0 +1,46 @@
+# Dependencies
+/node_modules/
+/.pnp/
+.pnp.*
+
+# Next.js build output
+/.next/
+/out/
+/build/
+/.swc/
+
+# Test and coverage output
+/coverage/
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+*.local
+
+# Deployment platforms
+.vercel/
+.netlify/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Local Codex and planning artifacts
+.codex/
+.openai/
+Poertfolio_init.md
