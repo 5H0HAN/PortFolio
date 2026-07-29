@@ -9,6 +9,13 @@ export type BlogCategory =
   | "Tutorials"
   | string;
 
+export type BlogMediaType =
+  | "none"
+  | "image"
+  | "gif"
+  | "video"
+  | "youtube";
+
 export interface BlogPostMeta {
   slug: string;
   title: string;
@@ -18,6 +25,10 @@ export interface BlogPostMeta {
   tags: string[];
   author: string;
   cover?: string;
+  mediaType?: BlogMediaType;
+  mediaUrl?: string;
+  mediaAlt?: string;
+  mediaCaption?: string;
   featured: boolean;
   published: boolean;
 }
@@ -69,6 +80,18 @@ function toBoolean(value: unknown, fallback = false): boolean {
   return fallback;
 }
 
+function parseMediaType(value: unknown): BlogMediaType {
+  if (
+    value === "image" ||
+    value === "gif" ||
+    value === "video" ||
+    value === "youtube"
+  ) {
+    return value;
+  }
+  return "none";
+}
+
 async function loadAllBlogFiles(): Promise<string[]> {
   try {
     const files = await fs.readdir(blogDirectory);
@@ -112,6 +135,15 @@ async function parsePostFile(fileName: string): Promise<BlogPost | null> {
         ? data.author
         : "Shohan Biswas",
     cover: typeof data.cover === "string" ? data.cover : undefined,
+    mediaType: parseMediaType(data.mediaType),
+    mediaUrl:
+      typeof data.mediaUrl === "string" ? data.mediaUrl : undefined,
+    mediaAlt:
+      typeof data.mediaAlt === "string" ? data.mediaAlt : undefined,
+    mediaCaption:
+      typeof data.mediaCaption === "string"
+        ? data.mediaCaption
+        : undefined,
     featured: toBoolean(data.featured, false),
     published: data.published === false ? false : true,
     content: String(parsed.content || "").trim(),

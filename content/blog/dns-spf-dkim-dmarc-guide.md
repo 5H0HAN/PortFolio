@@ -1,6 +1,5 @@
 ---
 title: "DNS, SPF, DKIM, DMARC: A Simple Field Guide"
-slug: "dns-spf-dkim-dmarc-guide"
 date: "2026-07-12"
 excerpt: "A practical explanation of records every service operator should understand."
 category: "Email Infrastructure"

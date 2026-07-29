@@ -4990,3 +4990,111 @@ html[data-theme="light"] .workflow-telemetry-state {
     animation: none;
   }
 }
+
+/* Keep article surfaces aligned with the global navigation width. */
+.article-page {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
+.article-back-link {
+  width: fit-content;
+}
+
+/* Keep the article masthead compact and remove the inherited double gap. */
+.article-header {
+  padding-block: clamp(3rem, 5vw, 4.75rem);
+}
+
+.article-header .article-back-link {
+  margin-bottom: clamp(2.75rem, 4vw, 4rem);
+}
+
+.article-header > .kicker {
+  margin-top: 0;
+}
+
+.article-media {
+  width: 100%;
+  margin: clamp(1.5rem, 3vw, 2.5rem) 0 0;
+}
+
+.article-media img,
+.article-media video,
+.article-media iframe {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.article-media img,
+.article-media video {
+  max-height: min(72vh, 760px);
+  object-fit: cover;
+}
+
+.article-media-youtube {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #05070b;
+  box-shadow: var(--shadow-soft);
+}
+
+.article-media-youtube iframe {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+}
+
+.article-media figcaption {
+  max-width: 760px;
+  margin: 0.8rem auto 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* Keystatic owns the viewport on its private content-studio route. */
+body:has(.keystatic-shell) .site-nav,
+body:has(.keystatic-shell) .site-footer,
+body:has(.keystatic-shell) .theme-toggle {
+  display: none;
+}
+
+body:has(.keystatic-shell) .page-shell,
+body:has(.keystatic-shell) main {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.keystatic-shell {
+  min-height: 100dvh;
+}
+
+@media (max-width: 720px) {
+  .article-header {
+    padding-block: 1.8rem;
+  }
+
+  .article-header .article-back-link {
+    margin-bottom: 2.75rem;
+  }
+
+  .article-media img,
+  .article-media video,
+  .article-media-youtube {
+    border-radius: 18px;
+  }
+}

@@ -1,6 +1,5 @@
 ---
 title: "Next.js Architecture for a Portfolio That Scales"
-slug: "nextjs-architecture-for-portfolio"
 date: "2026-07-16"
 excerpt: "Keep portfolio sections and blog in one app while still having clean content boundaries."
 category: "Programming"

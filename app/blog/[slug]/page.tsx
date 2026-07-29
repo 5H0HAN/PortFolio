@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import JsonLd from "@/components/json-ld";
 import PostCard from "@/components/post-card";
+import { PostMedia } from "@/components/post-media";
 import {
   formatBlogDate,
   getAllPosts,
@@ -39,7 +40,11 @@ export async function generateMetadata({
         author: post.author,
         category: post.category,
         tags: post.tags,
-        cover: post.cover,
+        cover:
+          post.cover ||
+          (post.mediaType === "image" || post.mediaType === "gif"
+            ? post.mediaUrl
+            : undefined),
       })
     : {
         title: "Post not found",
@@ -63,7 +68,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       "@id": `${canonical}#article`,
       headline: post.title,
       description: post.excerpt,
-      image: [absoluteUrl(post.cover || siteConfig.ogImage)],
+      image: [
+        absoluteUrl(
+          post.cover ||
+            ((post.mediaType === "image" || post.mediaType === "gif") &&
+            post.mediaUrl
+              ? post.mediaUrl
+              : siteConfig.ogImage),
+        ),
+      ],
       datePublished: post.date,
       dateModified: post.date,
       articleSection: post.category,
@@ -111,8 +124,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <article className="article-page reveal-stack">
       <JsonLd id="article-schema" data={articleJsonLd} />
       <header className="article-header">
-        <Link className="text-link" href="/blog">
-          &lt;- Field notes
+        <Link className="tool-back-link article-back-link" href="/blog">
+          <span className="flat-arrow is-left" aria-hidden="true" />
+          Field notes
         </Link>
         <p className="kicker">{post.category}</p>
         <h1>{post.title}</h1>
@@ -123,6 +137,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <span>{post.tags.length} topics</span>
         </div>
       </header>
+
+      <PostMedia
+        type={post.mediaType}
+        url={post.mediaUrl}
+        alt={post.mediaAlt}
+        caption={post.mediaCaption}
+      />
 
       <div className="article-layout">
         <aside>

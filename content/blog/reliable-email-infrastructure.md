@@ -1,6 +1,5 @@
 ---
 title: "Building Reliable Email Infrastructure for Small Teams"
-slug: "reliable-email-infrastructure"
 date: "2026-07-18"
 excerpt: "A practical checklist for SPF, DKIM, and DMARC checks when setting up Google Workspace."
 category: "Email Infrastructure"
