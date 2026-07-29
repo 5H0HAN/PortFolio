@@ -1,0 +1,91 @@
+{
+  "profile": {
+    "name": "Shohan Biswas",
+    "role": "Google Workspace & Email Infrastructure Specialist",
+    "supportingRole": "Computer Science and Engineering graduate",
+    "headline": "I engineer calm into business email.",
+    "summary": "Google Workspace migrations, DNS authentication, and backend tools that keep teams connected.",
+    "email": "hello@shohanbiswas.com",
+    "location": "Pabna, Bangladesh",
+    "availability": "Available for select freelance work",
+    "personalNote": "Lifelong learner and street photography enthusiast."
+  },
+  "socialLinks": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/5H0HAN"
+    },
+    {
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/5h0han/"
+    },
+    {
+      "label": "ResearchGate",
+      "href": "https://www.researchgate.net/profile/Shohan-Biswas?ev=hdr_xprf"
+    },
+    {
+      "label": "Fiverr",
+      "href": "https://www.fiverr.com/theshohan"
+    }
+  ],
+  "education": {
+    "degree": "BSc in Computer Science and Engineering",
+    "institution": "Pabna University of Science and Technology",
+    "graduation": "2024",
+    "hsc": "2016",
+    "ssc": "2013"
+  },
+  "marketplaceProof": {
+    "rating": "5.0",
+    "reviews": "477",
+    "level": "Level 2",
+    "experience": "3+ years",
+    "label": "Fiverr Workspace & Domain Mail specialist",
+    "href": "https://www.fiverr.com/theshohan"
+  },
+  "skillGroups": [
+    {
+      "number": "01",
+      "title": "Workspace & Mail",
+      "description": "The operational layer I work in most often.",
+      "items": [
+        "Google Workspace administration",
+        "Email migration",
+        "SPF / DKIM / DMARC",
+        "DNS and deliverability audits"
+      ]
+    },
+    {
+      "number": "02",
+      "title": "Backend Engineering",
+      "description": "Tools and services behind reliable workflows.",
+      "items": ["Node.js", "Python", "API design", "Automation"]
+    },
+    {
+      "number": "03",
+      "title": "Product Development",
+      "description": "Interfaces that make technical systems usable.",
+      "items": ["Next.js", "React", "JavaScript", "TypeScript"]
+    },
+    {
+      "number": "04",
+      "title": "Systems & AI",
+      "description": "Supporting tools for deployment and applied intelligence.",
+      "items": ["Linux", "Docker", "Git", "PyTorch", "C#", "C++"]
+    }
+  ],
+  "operatingPrinciples": [
+    {
+      "title": "Diagnose first",
+      "text": "Map the current mail flow and risk before changing production records."
+    },
+    {
+      "title": "Make changes observable",
+      "text": "Use repeatable checks so every cutover has a clear before and after."
+    },
+    {
+      "title": "Leave a clean handoff",
+      "text": "Document the system so the next operator can manage it confidently."
+    }
+  ]
+}

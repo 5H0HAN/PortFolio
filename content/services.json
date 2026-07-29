@@ -1,0 +1,36 @@
+{
+  "services": [
+    {
+      "number": "01",
+      "title": "Google Workspace Setup",
+      "promise": "A secure tenant, ready for daily operations.",
+      "summary": "Domain verification, users, access, baseline security, and an organized handoff.",
+      "deliverables": ["Tenant configuration", "Domain verification", "Admin handoff"],
+      "timeline": "Typical: 3-7 days"
+    },
+    {
+      "number": "02",
+      "title": "Email Migration",
+      "promise": "Move mail without losing operational clarity.",
+      "summary": "Structured migrations from cPanel, Zoho, or Microsoft 365 into Google Workspace.",
+      "deliverables": ["Readiness audit", "Routing cutover", "Post-migration checks"],
+      "timeline": "Typical: 5-10 days"
+    },
+    {
+      "number": "03",
+      "title": "DNS Authentication",
+      "promise": "Make legitimate mail easier to trust.",
+      "summary": "SPF, DKIM, and DMARC configuration with practical validation and reporting.",
+      "deliverables": ["Record audit", "Policy configuration", "Validation report"],
+      "timeline": "Typical: 1-3 days"
+    },
+    {
+      "number": "04",
+      "title": "Deliverability Repair",
+      "promise": "Find the weak point in the delivery chain.",
+      "summary": "Routing, authentication, and sender-posture analysis for mail landing in spam or failing.",
+      "deliverables": ["DNS diagnosis", "Prioritized fixes", "Retest and handoff"],
+      "timeline": "Typical: 2-5 days"
+    }
+  ]
+}

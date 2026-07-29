@@ -97,6 +97,9 @@ components/
   tools/                   DNS checker interfaces and reports
 content/
   blog/                    Markdown articles
+  site.json                Profile, links, education, skills, and principles
+  services.json            Service catalog
+  projects.json            Project catalog
   fiverr-reviews.json      Review snapshot used by the carousel
 lib/
   blog.ts                  Markdown loading and related-post logic
@@ -109,10 +112,14 @@ lib/
 
 Keystatic is available at `/keystatic`.
 
-- Local development edits the Markdown files in `content/blog` directly.
+- Local development edits Git-tracked content files directly.
 - Production uses authenticated GitHub mode for `5H0HAN/PortFolio`.
 - Production saves are Git-backed content changes, not writes to a separate database.
 - Only GitHub users with write access to the repository can enter the production studio.
+
+The studio manages field notes, external article media, profile and education
+details, social links, marketplace proof, skills, operating principles,
+services, and projects. Layout, tools, and application behavior remain in code.
 
 The first production setup requires opening `/keystatic`, creating or connecting
 the prompted GitHub App, granting it access to this repository, and copying the
