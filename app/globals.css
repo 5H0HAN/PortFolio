@@ -4706,3 +4706,287 @@ html[data-theme="light"] .workflow-handoff .workflow-ready {
     animation: none;
   }
 }
+
+/* Animated verification lane below the client workflow. */
+.workflow-telemetry {
+  position: relative;
+  display: grid;
+  gap: 0.9rem;
+  min-height: 10.5rem;
+  padding: 1rem clamp(1rem, 2vw, 1.5rem);
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--accent) 7%, transparent),
+      transparent 45%,
+      color-mix(in srgb, #72df9a 7%, transparent)
+    ),
+    color-mix(in srgb, var(--surface) 92%, transparent);
+}
+
+.workflow-telemetry::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  opacity: 0.32;
+  background: linear-gradient(
+    110deg,
+    transparent 35%,
+    color-mix(in srgb, var(--accent) 18%, transparent) 50%,
+    transparent 65%
+  );
+  transform: translateX(-100%);
+  animation: telemetry-scan 7s ease-in-out infinite;
+}
+
+.workflow-telemetry-head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.workflow-telemetry-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  color: #72df9a;
+}
+
+.workflow-telemetry-state i {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0.8rem currentColor;
+  animation: telemetry-live 1.8s ease-in-out infinite;
+}
+
+.workflow-delivery-path {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  min-height: 4.25rem;
+}
+
+.delivery-track {
+  position: absolute;
+  top: 0.72rem;
+  right: 8%;
+  left: 8%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    color-mix(in srgb, var(--accent) 46%, #72df9a),
+    #72df9a
+  );
+}
+
+.delivery-track::after {
+  position: absolute;
+  inset: -0.25rem 0;
+  content: "";
+  opacity: 0.28;
+  background: inherit;
+  filter: blur(0.45rem);
+}
+
+.delivery-packet {
+  position: absolute;
+  z-index: 4;
+  top: 0.39rem;
+  left: 7%;
+  width: 0.68rem;
+  height: 0.68rem;
+  border: 2px solid var(--surface-raised);
+  border-radius: 0.18rem;
+  background: var(--accent);
+  box-shadow:
+    0 0 0 0.3rem color-mix(in srgb, var(--accent) 12%, transparent),
+    0 0 1.1rem color-mix(in srgb, var(--accent) 68%, transparent);
+  transform: rotate(45deg);
+  animation: delivery-packet 6s ease-in-out infinite;
+}
+
+.delivery-path-node {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  justify-items: center;
+  gap: 0.22rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.delivery-path-node > span {
+  width: 1.45rem;
+  height: 1.45rem;
+  margin-bottom: 0.12rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 62%, var(--line));
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--accent) 0 18%, transparent 21%),
+    var(--surface-raised);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 18%, transparent);
+  animation: delivery-node 6s ease-in-out infinite;
+}
+
+.delivery-node-2 > span {
+  animation-delay: 1.5s;
+}
+
+.delivery-node-3 > span {
+  animation-delay: 3s;
+}
+
+.delivery-node-4 > span {
+  border-color: color-mix(in srgb, #72df9a 62%, var(--line));
+  background:
+    radial-gradient(circle, #72df9a 0 18%, transparent 21%),
+    var(--surface-raised);
+  animation-delay: 4.5s;
+}
+
+.delivery-path-node strong {
+  color: var(--text);
+  font-size: 0.69rem;
+  line-height: 1.2;
+}
+
+.delivery-path-node small {
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.workflow-auth-strip {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.workflow-auth-strip span {
+  padding: 0.4rem 0.48rem;
+  color: var(--text-subtle);
+  border: 1px solid var(--line);
+  border-radius: 0.42rem;
+  background: color-mix(in srgb, var(--surface-raised) 76%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+html[data-theme="light"] .workflow-telemetry-state {
+  color: #196b36;
+}
+
+@keyframes telemetry-scan {
+  0%,
+  18% {
+    transform: translateX(-100%);
+  }
+  78%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes telemetry-live {
+  0%,
+  100% {
+    opacity: 0.48;
+    transform: scale(0.82);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes delivery-packet {
+  0%,
+  12% {
+    left: 7%;
+    background: var(--accent);
+  }
+  29% {
+    left: 31.5%;
+  }
+  46% {
+    left: 56%;
+  }
+  63%,
+  82% {
+    left: 91.5%;
+    background: #72df9a;
+  }
+  100% {
+    left: 7%;
+    background: var(--accent);
+  }
+}
+
+@keyframes delivery-node {
+  0%,
+  18%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+  5%,
+  13% {
+    box-shadow:
+      0 0 0 0.35rem color-mix(in srgb, var(--accent) 13%, transparent),
+      0 0 1rem color-mix(in srgb, var(--accent) 46%, transparent);
+  }
+}
+
+@media (max-width: 720px) {
+  .workflow-telemetry {
+    min-height: 10rem;
+    padding: 0.9rem 0.85rem;
+  }
+
+  .delivery-path-node strong {
+    font-size: 0.62rem;
+  }
+
+  .delivery-path-node small {
+    display: none;
+  }
+
+  .workflow-auth-strip {
+    gap: 0.3rem;
+  }
+
+  .workflow-auth-strip span {
+    padding-inline: 0.25rem;
+    font-size: 0.48rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workflow-telemetry::before,
+  .workflow-telemetry-state i,
+  .delivery-packet,
+  .delivery-path-node > span {
+    animation: none;
+  }
+}

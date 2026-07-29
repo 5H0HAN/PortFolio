@@ -36,12 +36,19 @@ const serviceLanes = [
   "Deliverability",
 ];
 
+const deliveryPath = [
+  { label: "Sender", state: "Signed" },
+  { label: "DNS auth", state: "Aligned" },
+  { label: "Workspace", state: "Routed" },
+  { label: "Recipient", state: "Accepted" },
+];
+
 export default function FarmerAnimation() {
   return (
     <div
       className="ops-field ops-workflow"
       role="img"
-      aria-label="Shohan Biswas's workflow: diagnose the current system, design a plan, implement controlled changes, then verify and document the handoff"
+      aria-label="Shohan Biswas's workflow: diagnose the current system, design a plan, implement controlled changes, verify and document the handoff, then monitor the authenticated delivery path"
     >
       <div className="ops-field-head">
         <span>Client operations / controlled change</span>
@@ -87,6 +94,37 @@ export default function FarmerAnimation() {
           {serviceLanes.map((service) => (
             <span key={service}>{service}</span>
           ))}
+        </div>
+      </div>
+
+      <div className="workflow-telemetry" aria-hidden="true">
+        <div className="workflow-telemetry-head">
+          <span>Live verification path</span>
+          <span className="workflow-telemetry-state">
+            <i />
+            4 signals aligned
+          </span>
+        </div>
+
+        <div className="workflow-delivery-path">
+          <span className="delivery-track" />
+          <span className="delivery-packet" />
+          {deliveryPath.map((point, index) => (
+            <div
+              className={`delivery-path-node delivery-node-${index + 1}`}
+              key={point.label}
+            >
+              <span />
+              <strong>{point.label}</strong>
+              <small>{point.state}</small>
+            </div>
+          ))}
+        </div>
+
+        <div className="workflow-auth-strip">
+          <span>MX / Google route</span>
+          <span>SPF + DKIM / pass</span>
+          <span>DMARC / aligned</span>
         </div>
       </div>
 
