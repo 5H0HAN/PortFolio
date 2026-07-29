@@ -1,7 +1,12 @@
 import { collection, config, fields, singleton } from "@keystatic/core";
 
+const useGitHubStorage =
+  process.env.NEXT_PUBLIC_KEYSTATIC_STORAGE_KIND === "github" ||
+  (process.env.NODE_ENV === "production" &&
+    Boolean(process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG));
+
 const storage =
-  process.env.NODE_ENV === "production"
+  useGitHubStorage
     ? ({ kind: "github", repo: "5H0HAN/PortFolio" } as const)
     : ({ kind: "local" } as const);
 
