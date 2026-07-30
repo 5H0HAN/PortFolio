@@ -30,7 +30,7 @@ You can use simple scripts to verify all of these in one run.
 dig +short TXT yourdomain.com | sed 's/^/SPF: /'
 ```
 
-![](/images/blog/reliable-email-infrastructure/image.png)
+![](/images/blog/reliable-email-infrastructure/Austin.Powers.-.The.Spy.Who.Shagged.Me.1999.1080p.MAX.WEB-DL.DDP5.1.H.265-slxls.mkv_20260320_041016.591.png)
 
 ## Why this matters
 
