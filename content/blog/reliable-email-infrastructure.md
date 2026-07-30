@@ -30,20 +30,6 @@ You can use simple scripts to verify all of these in one run.
 dig +short TXT yourdomain.com | sed 's/^/SPF: /'
 ```
 
-{% table %}
-- dkfjgvbnzd
-- asdfgasdf
-- fasdfasd
----
-- afasdf
-- asdfasd
-- asdfasdf
----
-- asdfasdf
-- asdfasdf
-- asdfasdf
-{% /table %}
-
 ## Why this matters
 
 Most failed deliveries are caused by a weak DNS chain, not the sending app.\
