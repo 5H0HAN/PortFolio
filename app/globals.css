@@ -5626,3 +5626,42 @@ html .metadata-line {
     transition: none !important;
   }
 }
+
+/* Keep the responsive navigation content anchored near the top of its rail. */
+@media (max-width: 1080px) {
+  #site-nav-links {
+    justify-content: flex-start;
+    align-content: flex-start;
+    padding-block-start: clamp(1rem, 2.4vh, 1.5rem);
+  }
+}
+
+/* Prevent transformed and wide responsive elements from widening the root canvas. */
+html,
+body {
+  max-inline-size: 100%;
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  html,
+  body {
+    overflow-x: clip;
+  }
+}
+
+.page-shell,
+.page-shell > main {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+/* Keep the compact navbar floating while mobile content scrolls. */
+@media (max-width: 1080px) {
+  .site-nav {
+    position: sticky;
+    top: max(0.65rem, env(safe-area-inset-top));
+    z-index: 1200;
+    isolation: isolate;
+  }
+}
