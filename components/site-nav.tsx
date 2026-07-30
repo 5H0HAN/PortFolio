@@ -52,6 +52,7 @@ export default function SiteNav() {
   const [togglePosition, setTogglePosition] =
     useState<TogglePosition | null>(null);
   const [isDraggingToggle, setIsDraggingToggle] = useState(false);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const dragState = useRef<DragState | null>(null);
   const dragListeners = useRef<DragListeners | null>(null);
@@ -61,6 +62,43 @@ export default function SiteNav() {
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const closeMenu = (restoreFocus = false) => {
+      setMenuOpen(false);
+      if (restoreFocus) {
+        window.requestAnimationFrame(() => menuToggleRef.current?.focus());
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeMenu(true);
+      }
+    };
+
+    const handleResize = () => {
+      if (window.innerWidth > 1080) {
+        closeMenu();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     let animationFrame = 0;
@@ -302,21 +340,32 @@ export default function SiteNav() {
         </Link>
 
         <button
+          ref={menuToggleRef}
           type="button"
           className="nav-menu-toggle"
-          aria-label="Toggle navigation"
+          aria-label={`${menuOpen ? "Close" : "Open"} navigation menu`}
           aria-expanded={menuOpen}
           aria-controls="site-nav-links"
           onClick={() => setMenuOpen((current) => !current)}
         >
-          {menuOpen ? "Close" : "Menu"}
+          <span className="nav-menu-toggle-label">
+            {menuOpen ? "Close" : "Menu"}
+          </span>
+          <span className="nav-menu-toggle-icon" aria-hidden="true">
+            <span />
+            <span />
+          </span>
         </button>
 
         <ul
           id="site-nav-links"
           className={`nav-links ${menuOpen ? "is-open" : ""}`}
         >
-          {navLinks.map((link) => {
+          <li className="nav-panel-heading" aria-hidden="true">
+            <span>Navigation</span>
+            <span>{navLinks.length} routes</span>
+          </li>
+          {navLinks.map((link, index) => {
             const active = Boolean(isActive(link.href));
             return (
               <li key={link.href}>
@@ -324,14 +373,28 @@ export default function SiteNav() {
                   href={link.href}
                   className={`nav-link ${active ? "is-active" : ""}`}
                   aria-current={active ? "page" : undefined}
+                  onClick={() => setMenuOpen(false)}
                 >
-                  {link.label}
+                  <span className="nav-link-index" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="nav-link-label">{link.label}</span>
+                  <span className="nav-link-arrow" aria-hidden="true" />
                 </Link>
               </li>
             );
           })}
         </ul>
       </nav>
+
+      <button
+        type="button"
+        className={`nav-menu-scrim ${menuOpen ? "is-open" : ""}`}
+        aria-label="Close navigation menu"
+        aria-hidden={!menuOpen}
+        tabIndex={menuOpen ? 0 : -1}
+        onClick={() => setMenuOpen(false)}
+      />
 
       <button
         ref={toggleRef}

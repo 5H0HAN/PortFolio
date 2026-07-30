@@ -108,9 +108,27 @@ export default config({
           label: "Media caption",
           multiline: true,
         }),
+        mediaWidth: fields.integer({
+          label: "Media width (px)",
+          description:
+            "Intrinsic source width. Use the image's real pixel width to prevent layout shift.",
+          defaultValue: 1600,
+        }),
+        mediaHeight: fields.integer({
+          label: "Media height (px)",
+          description:
+            "Intrinsic source height. Use the image's real pixel height to preserve its aspect ratio.",
+          defaultValue: 900,
+        }),
         content: fields.markdoc({
           label: "Article",
           extension: "md",
+          options: {
+            image: {
+              directory: "public/images/blog",
+              publicPath: "/images/blog/",
+            },
+          },
         }),
       },
     }),

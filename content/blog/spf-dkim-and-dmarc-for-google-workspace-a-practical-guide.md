@@ -24,6 +24,8 @@ mediaAlt: >-
 mediaCaption: >-
   Email authentication concept diagram by Macquigg, via Wikimedia Commons,
   licensed CC BY-SA 2.5.
+mediaWidth: 606
+mediaHeight: 124
 ---
 \
 \

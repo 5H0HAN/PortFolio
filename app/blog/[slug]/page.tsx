@@ -145,6 +145,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         url={post.mediaUrl}
         alt={post.mediaAlt}
         caption={post.mediaCaption}
+        width={post.mediaWidth}
+        height={post.mediaHeight}
       />
 
       <div className="article-layout">
@@ -157,7 +159,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </ul>
         </aside>
         <div className="markdown-body">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              img: ({ node: _node, ...imageProps }) => (
+                <img
+                  {...imageProps}
+                  className="markdown-inline-image"
+                  width={1600}
+                  height={900}
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
+              ),
+            }}
+          >
+            {post.content}
+          </ReactMarkdown>
         </div>
       </div>
 

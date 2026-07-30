@@ -7,6 +7,8 @@ type PostMediaProps = {
   url?: string;
   alt?: string;
   caption?: string;
+  width?: number;
+  height?: number;
 };
 
 const optimizedImageHosts = new Set([
@@ -55,12 +57,34 @@ function getCanonicalImageUrl(url: URL) {
   return url;
 }
 
-function getImageDimensions(url: URL) {
+function getImageDimensions(url: URL, width?: number, height?: number) {
+  if (
+    Number.isInteger(width) &&
+    Number.isInteger(height) &&
+    Number(width) > 0 &&
+    Number(height) > 0
+  ) {
+    return { width: Number(width), height: Number(height) };
+  }
+
   if (url.pathname.endsWith("/Email_Authentication_03d.png")) {
     return { width: 606, height: 124 };
   }
 
   return { width: 1600, height: 900 };
+}
+
+function getImageOrientation({
+  width,
+  height,
+}: {
+  width: number;
+  height: number;
+}) {
+  const ratio = width / height;
+  if (ratio < 0.82) return "portrait";
+  if (ratio <= 1.2) return "square";
+  return "landscape";
 }
 
 function getYouTubeEmbedUrl(value?: string) {
@@ -101,6 +125,8 @@ export function PostMedia({
   url,
   alt = "",
   caption,
+  width,
+  height,
 }: PostMediaProps) {
   if (type === "none") {
     return null;
@@ -116,12 +142,15 @@ export function PostMedia({
     return null;
   }
   const imageUrl = getCanonicalImageUrl(safeUrl);
-  const imageDimensions = getImageDimensions(imageUrl);
+  const imageDimensions = getImageDimensions(imageUrl, width, height);
+  const imageOrientation = getImageOrientation(imageDimensions);
   const shouldOptimizeImage =
     type === "image" && canOptimizeImage(imageUrl);
 
   return (
-    <figure className={`article-media article-media-${type}`}>
+    <figure
+      className={`article-media article-media-${type} media-orientation-${imageOrientation}`}
+    >
       {type === "youtube" ? (
         <iframe
           src={youtubeUrl ?? undefined}
@@ -141,6 +170,7 @@ export function PostMedia({
         />
       ) : shouldOptimizeImage ? (
         <Image
+          className="article-media-asset"
           src={imageUrl.toString()}
           alt={alt}
           width={imageDimensions.width}
@@ -149,9 +179,11 @@ export function PostMedia({
           priority
           fetchPriority="high"
           referrerPolicy="no-referrer"
+          style={{ width: "100%", height: "auto", objectFit: "contain" }}
         />
       ) : (
         <img
+          className="article-media-asset"
           src={imageUrl.toString()}
           alt={alt}
           width={imageDimensions.width}
@@ -161,6 +193,7 @@ export function PostMedia({
           fetchPriority="high"
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
+          style={{ width: "100%", height: "auto", objectFit: "contain" }}
         />
       )}
       {caption ? <figcaption>{caption}</figcaption> : null}

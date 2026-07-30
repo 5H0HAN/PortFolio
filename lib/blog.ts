@@ -29,6 +29,8 @@ export interface BlogPostMeta {
   mediaUrl?: string;
   mediaAlt?: string;
   mediaCaption?: string;
+  mediaWidth?: number;
+  mediaHeight?: number;
   featured: boolean;
   published: boolean;
 }
@@ -78,6 +80,11 @@ function toBoolean(value: unknown, fallback = false): boolean {
     return value.toLowerCase() === "true";
   }
   return fallback;
+}
+
+function parsePositiveInteger(value: unknown): number | undefined {
+  const parsed = typeof value === "number" ? value : Number(value);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : undefined;
 }
 
 function parseMediaType(value: unknown): BlogMediaType {
@@ -144,6 +151,8 @@ async function parsePostFile(fileName: string): Promise<BlogPost | null> {
       typeof data.mediaCaption === "string"
         ? data.mediaCaption
         : undefined,
+    mediaWidth: parsePositiveInteger(data.mediaWidth),
+    mediaHeight: parsePositiveInteger(data.mediaHeight),
     featured: toBoolean(data.featured, false),
     published: data.published === false ? false : true,
     content: String(parsed.content || "").trim(),
