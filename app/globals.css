@@ -5665,3 +5665,36 @@ body {
     isolation: isolate;
   }
 }
+
+
+/* Preserve the floating navbar when a menu opens after scrolling on mobile. */
+@media (max-width: 1080px) {
+  .site-nav,
+  .site-nav:has(#site-nav-links.open) {
+    position: sticky !important;
+    top: max(0.65rem, env(safe-area-inset-top)) !important;
+    z-index: 1200;
+  }
+
+  #site-nav-links {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+
+  .nav-menu-scrim {
+    overscroll-behavior: none;
+    touch-action: none;
+  }
+}
+
+/* Older mobile browsers can clip at the root without turning body into a scroll container. */
+@supports not (overflow: clip) {
+  html {
+    overflow-x: hidden;
+  }
+
+  body {
+    overflow-x: visible;
+  }
+}

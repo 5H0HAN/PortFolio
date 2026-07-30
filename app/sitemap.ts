@@ -32,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
   const articles = posts.map((post) => ({
     url: absoluteUrl(`/blog/${post.slug}`),
-    lastModified: new Date(post.date),
+    lastModified: new Date(post.updatedDate || post.date),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));

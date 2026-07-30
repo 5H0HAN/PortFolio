@@ -74,10 +74,12 @@ interface ArticleMetadataInput {
   description: string;
   path: string;
   date: string;
+  modifiedDate?: string;
   author: string;
   category: string;
   tags: string[];
   cover?: string;
+  imageAlt?: string;
 }
 
 export function createArticleMetadata({
@@ -85,10 +87,12 @@ export function createArticleMetadata({
   description,
   path,
   date,
+  modifiedDate,
   author,
   category,
   tags,
   cover,
+  imageAlt,
 }: ArticleMetadataInput): Metadata {
   const canonical = absoluteUrl(path);
   const image = absoluteUrl(cover || siteConfig.ogImage);
@@ -109,6 +113,7 @@ export function createArticleMetadata({
       title,
       description,
       publishedTime: date,
+      modifiedTime: modifiedDate || date,
       authors: [author],
       section: category,
       tags,
@@ -117,7 +122,7 @@ export function createArticleMetadata({
           url: image,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: imageAlt || title,
         },
       ],
     },

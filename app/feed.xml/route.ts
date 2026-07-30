@@ -14,9 +14,14 @@ function escapeXml(value: string) {
 
 export async function GET() {
   const posts = await getAllPosts();
-  const lastBuildDate = posts[0]
-    ? new Date(posts[0].date).toUTCString()
-    : new Date().toUTCString();
+  const newestArticleTimestamp = posts.reduce(
+    (latest, post) =>
+      Math.max(latest, new Date(post.updatedDate || post.date).getTime()),
+    0,
+  );
+  const lastBuildDate = new Date(
+    newestArticleTimestamp || Date.now(),
+  ).toUTCString();
   const items = posts
     .map((post) => {
       const url = absoluteUrl(`/blog/${post.slug}`);

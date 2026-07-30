@@ -48,6 +48,10 @@ export default config({
           label: "Publication date",
           validation: { isRequired: true },
         }),
+        updatedDate: fields.date({
+          label: "Updated date",
+          description: "Optional. Set this only after a meaningful revision to a published article.",
+        }),
         excerpt: fields.text({
           label: "Summary",
           description: "Used on blog cards and in search results.",

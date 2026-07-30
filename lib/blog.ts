@@ -21,6 +21,7 @@ export interface BlogPostMeta {
   title: string;
   excerpt: string;
   date: string;
+  updatedDate?: string;
   category: BlogCategory;
   tags: string[];
   author: string;
@@ -132,6 +133,10 @@ async function parsePostFile(fileName: string): Promise<BlogPost | null> {
         ? data.excerpt
         : "Read the full article to learn more about this topic.",
     date: parseDate(data.date),
+    updatedDate:
+      typeof data.updatedDate === "string" && data.updatedDate.trim()
+        ? data.updatedDate
+        : undefined,
     category:
       typeof data.category === "string" && data.category.trim().length > 0
         ? data.category.trim()

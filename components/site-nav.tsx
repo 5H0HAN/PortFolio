@@ -68,8 +68,6 @@ export default function SiteNav() {
       return;
     }
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
 
     const closeMenu = (restoreFocus = false) => {
       setMenuOpen(false);
@@ -94,7 +92,6 @@ export default function SiteNav() {
     window.addEventListener("resize", handleResize);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("resize", handleResize);
     };

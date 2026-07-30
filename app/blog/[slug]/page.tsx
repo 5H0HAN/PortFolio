@@ -38,9 +38,11 @@ export async function generateMetadata({
         description: post.excerpt,
         path: `/blog/${post.slug}`,
         date: post.date,
+        modifiedDate: post.updatedDate || post.date,
         author: post.author,
         category: post.category,
         tags: post.tags,
+        imageAlt: post.mediaAlt || post.title,
         cover:
           post.cover ||
           (post.mediaType === "image" || post.mediaType === "gif"
@@ -80,7 +82,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         ),
       ],
       datePublished: post.date,
-      dateModified: post.date,
+      dateModified: post.updatedDate || post.date,
       articleSection: post.category,
       keywords: post.tags.join(", "),
       inLanguage: "en",
