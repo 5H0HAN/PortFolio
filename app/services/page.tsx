@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import FiverrProof from "@/components/fiverr-proof";
 import JsonLd from "@/components/json-ld";
 import {
   marketplaceProof,
@@ -46,7 +45,7 @@ const servicesJsonLd = [
       },
     })),
   },
-  // Aggregate rating is backed by the visible Fiverr proof block and the rendered review carousel below.
+  // Aggregate rating is backed by the visible Fiverr proof block rendered by app/services/layout.tsx.
   {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -134,8 +133,6 @@ export default function ServicesPage() {
           ))}
         </div>
       </section>
-
-      <FiverrProof />
 
       <section className="process-panel">
         <div>
