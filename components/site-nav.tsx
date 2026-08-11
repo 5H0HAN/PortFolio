@@ -48,10 +48,10 @@ export default function SiteNav() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [togglePosition, setTogglePosition] =
     useState<TogglePosition | null>(null);
   const [isDraggingToggle, setIsDraggingToggle] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
   const menuToggleRef = useRef<HTMLButtonElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const dragState = useRef<DragState | null>(null);
@@ -109,8 +109,9 @@ export default function SiteNav() {
           ? 1
           : clamp(window.scrollY / maximumScroll, 0, 1);
 
-      setScrollProgress((current) =>
-        Math.abs(current - nextProgress) < 0.001 ? current : nextProgress,
+      navRef.current?.style.setProperty(
+        "--nav-scroll-progress",
+        String(nextProgress),
       );
     };
 
@@ -137,15 +138,27 @@ export default function SiteNav() {
   }, [pathname]);
 
   useEffect(() => {
-    const savedTheme = window.localStorage.getItem("portfolio-theme");
-    const systemTheme = window.matchMedia("(prefers-color-scheme: light)").matches
-      ? "light"
-      : "dark";
-    const resolvedTheme =
-      savedTheme === "light" || savedTheme === "dark" ? savedTheme : systemTheme;
+    const media = window.matchMedia("(prefers-color-scheme: light)");
+    const applyTheme = () => {
+      let savedTheme: string | null = null;
+      try {
+        savedTheme = window.localStorage.getItem("portfolio-theme");
+      } catch {
+        // Storage can be disabled; the system preference remains a safe fallback.
+      }
+      const systemTheme = media.matches ? "light" : "dark";
+      const resolvedTheme =
+        savedTheme === "light" || savedTheme === "dark"
+          ? savedTheme
+          : systemTheme;
 
-    document.documentElement.setAttribute("data-theme", resolvedTheme);
-    setTheme(resolvedTheme);
+      document.documentElement.setAttribute("data-theme", resolvedTheme);
+      setTheme(resolvedTheme);
+    };
+
+    applyTheme();
+    media.addEventListener("change", applyTheme);
+    return () => media.removeEventListener("change", applyTheme);
   }, []);
 
   useEffect(() => {
@@ -195,7 +208,11 @@ export default function SiteNav() {
   const toggleTheme = () => {
     setTheme((current) => {
       const next = current === "dark" ? "light" : "dark";
-      window.localStorage.setItem("portfolio-theme", next);
+      try {
+        window.localStorage.setItem("portfolio-theme", next);
+      } catch {
+        // The visual toggle still works when persistent storage is unavailable.
+      }
       document.documentElement.setAttribute("data-theme", next);
       return next;
     });
@@ -314,16 +331,12 @@ export default function SiteNav() {
       } as CSSProperties)
     : undefined;
 
-  const navStyle = {
-    "--nav-scroll-progress": scrollProgress,
-  } as CSSProperties;
-
   return (
     <>
       <nav
+        ref={navRef}
         className="site-nav"
         aria-label="Primary navigation"
-        style={navStyle}
       >
         <span className="nav-scroll-progress" aria-hidden="true">
           <span className="nav-scroll-progress-fill" />

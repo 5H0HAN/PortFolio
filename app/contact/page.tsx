@@ -1,7 +1,26 @@
+import type { Metadata } from "next";
 import ContactForm from "@/components/contact-form";
 import { profile, socialLinks } from "@/lib/portfolio";
+import { createPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "Contact for Google Workspace & Email Support",
+  description:
+    "Contact Shohan Biswas about Google Workspace setup, email migration, SPF, DKIM, DMARC, deliverability, or backend automation.",
+  path: "/contact",
+  keywords: [
+    "contact Google Workspace specialist",
+    "email migration consultant",
+    "email deliverability support",
+  ],
+});
 
 export default function ContactPage() {
+  const deliveryEnabled = Boolean(
+    process.env.RESEND_API_KEY?.trim() &&
+      process.env.CONTACT_FROM_EMAIL?.trim(),
+  );
+
   return (
     <div className="page-stack reveal-stack">
       <section className="contact-hero">
@@ -56,7 +75,7 @@ export default function ContactPage() {
             ))}
           </div>
         </div>
-        <ContactForm />
+        <ContactForm deliveryEnabled={deliveryEnabled} />
       </section>
     </div>
   );

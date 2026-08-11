@@ -1,4 +1,18 @@
+import type { Metadata } from "next";
 import { projects } from "@/lib/portfolio";
+import { createPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "Email Infrastructure & Engineering Projects",
+  description:
+    "Explore Google Workspace DNS tools, mail deliverability diagnostics, automation, networking, and engineering projects by Shohan Biswas.",
+  path: "/projects",
+  keywords: [
+    "email infrastructure projects",
+    "Google Workspace DNS tool",
+    "backend engineering portfolio",
+  ],
+});
 
 export default function ProjectsPage() {
   return (

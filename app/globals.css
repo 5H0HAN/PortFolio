@@ -357,7 +357,7 @@ html[data-theme="light"] .theme-icon-moon {
 
 .footer-callout {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 2rem;
   padding-bottom: clamp(2.5rem, 6vw, 5rem);
@@ -470,7 +470,7 @@ html[data-theme="light"] .theme-icon-moon {
 .page-hero-split {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(270px, 0.6fr);
-  align-items: end;
+  align-items: flex-end;
   gap: clamp(2rem, 8vw, 7rem);
 }
 
@@ -564,7 +564,7 @@ html[data-theme="light"] .btn {
 
 .section-header {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 2rem;
   margin-bottom: clamp(2rem, 5vw, 4.5rem);
@@ -1577,7 +1577,7 @@ html[data-theme="light"] .btn {
 .about-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
-  align-items: end;
+  align-items: flex-end;
   gap: clamp(2rem, 8vw, 7rem);
   min-height: 590px;
   padding: clamp(2rem, 6vw, 5.5rem);
@@ -1913,6 +1913,7 @@ html[data-theme="light"] .btn {
 }
 
 .contact-form {
+  position: relative;
   display: grid;
   gap: 1rem;
   padding: clamp(1.2rem, 3vw, 2rem);
@@ -1965,6 +1966,46 @@ select:focus {
 input::placeholder,
 textarea::placeholder {
   color: var(--text-subtle);
+}
+
+.contact-form .contact-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-form-message {
+  margin: 0;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  font-size: 0.78rem;
+}
+
+.contact-form-message.is-success {
+  border-color: color-mix(in oklab, var(--positive) 42%, var(--line));
+  background: color-mix(in oklab, var(--positive) 9%, transparent);
+  color: var(--positive);
+}
+
+.contact-form-message.is-error {
+  border-color: color-mix(in oklab, var(--danger) 42%, var(--line));
+  background: color-mix(in oklab, var(--danger) 9%, transparent);
+  color: var(--danger);
+}
+
+.contact-form-message a {
+  color: inherit;
+  font-weight: 700;
+}
+
+.contact-form button:disabled {
+  cursor: wait;
+  opacity: 0.7;
 }
 
 .contact-form-foot {
@@ -2338,7 +2379,7 @@ textarea::placeholder {
 .tool-runner-heading,
 .tool-cross-link {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
 }
@@ -2481,7 +2522,7 @@ textarea::placeholder {
 .tool-detail-hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(220px, 0.35fr);
-  align-items: end;
+  align-items: flex-end;
   gap: clamp(2rem, 7vw, 6rem);
   min-height: 500px;
   padding: clamp(2rem, 6vw, 5rem);
@@ -3649,7 +3690,7 @@ button[aria-label*="mode" i]:focus-visible {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 2rem;
-  align-items: end;
+  align-items: flex-end;
 }
 
 .fiverr-proof-kicker {
@@ -5684,7 +5725,7 @@ body {
 /* Preserve the floating navbar when a menu opens after scrolling on mobile. */
 @media (max-width: 1080px) {
   .site-nav,
-  .site-nav:has(#site-nav-links.open) {
+  .site-nav:has(#site-nav-links.is-open) {
     position: sticky !important;
     top: max(0.65rem, env(safe-area-inset-top)) !important;
     z-index: 1200;

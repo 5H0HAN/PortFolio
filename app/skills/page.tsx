@@ -1,5 +1,19 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { operatingPrinciples, skillGroups } from "@/lib/portfolio";
+import { createPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "Google Workspace, DNS & Backend Skills",
+  description:
+    "Capabilities across Google Workspace administration, email migration, SPF, DKIM, DMARC, DNS, Node.js, Python, React, and automation.",
+  path: "/skills",
+  keywords: [
+    "Google Workspace skills",
+    "SPF DKIM DMARC specialist",
+    "DNS and backend automation",
+  ],
+});
 
 export default function SkillsPage() {
   return (
