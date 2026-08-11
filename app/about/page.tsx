@@ -25,7 +25,7 @@ export default function AboutPage() {
   const researchGate = socialLinks.find((link) => link.label === "ResearchGate");
 
   return (
-    <div className="page-stack reveal-stack">
+    <div className="page-stack reveal-stack about-page">
       <section className="about-hero">
         <div>
           <p className="kicker">About / Shohan Biswas</p>
