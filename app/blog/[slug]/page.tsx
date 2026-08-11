@@ -164,8 +164,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
-              img: ({ node, alt, ...imageProps }) => {
+              img: ({ node, alt, ref, ...imageProps }) => {
                 void node;
+                void ref;
                 return (
                   // Markdown authors can use HTTPS hosts outside Next's fixed image allowlist.
                   // eslint-disable-next-line @next/next/no-img-element
