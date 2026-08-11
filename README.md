@@ -21,10 +21,11 @@ deployable application.
 
 ## Technology
 
-- Next.js 15 App Router
+- Next.js 15 (App Router)
 - React 18
 - TypeScript
 - Markdown with `gray-matter`, `react-markdown`, and `remark-gfm`
+- Keystatic for content editing
 - Server-side DNS diagnostics
 - CSS design system with responsive layouts and theme tokens
 - pnpm

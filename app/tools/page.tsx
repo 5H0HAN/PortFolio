@@ -71,9 +71,19 @@ const toolsJsonLd = {
 };
 
 export default function ToolsPage() {
+  const toolsBreadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 2, name: "Tools", item: absoluteUrl("/tools") },
+    ],
+  };
+
   return (
     <div className="tools-page reveal-stack">
       <JsonLd id="tools-directory-schema" data={toolsJsonLd} />
+      <JsonLd id="tools-breadcrumb" data={toolsBreadcrumb} />
       <section className="tools-hero" aria-labelledby="tools-title">
         <div className="tools-hero-copy">
           <p className="tool-overline">Infrastructure utility desk</p>

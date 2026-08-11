@@ -1368,7 +1368,6 @@ html[data-theme="light"] .btn {
   display: grid;
   grid-template-columns: minmax(240px, 0.65fr) minmax(0, 1.35fr);
   gap: clamp(2rem, 7vw, 6rem);
-  margin: clamp(2rem, 6vw, 5rem) 0;
   padding: clamp(1.5rem, 4vw, 3rem);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -1654,11 +1653,11 @@ html[data-theme="light"] .btn {
   font-size: 0.75rem;
 }
 
+/* Per-section margins are neutralized by :where(.page-stack) > * { margin-block: 0 !important; } above. */
 .education-panel {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(180px, 0.35fr) minmax(220px, 0.45fr);
   gap: clamp(1.5rem, 5vw, 4rem);
-  margin: clamp(2rem, 5vw, 4rem) 0;
   padding: clamp(1.5rem, 4vw, 3rem);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);

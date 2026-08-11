@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import FiverrProof from "@/components/fiverr-proof";
 import JsonLd from "@/components/json-ld";
 import {
   marketplaceProof,
@@ -23,27 +24,47 @@ export const metadata: Metadata = createPageMetadata({
   ],
 });
 
-const servicesJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  name: "Google Workspace and email infrastructure services",
-  url: absoluteUrl("/services"),
-  itemListElement: services.map((service, index) => ({
-    "@type": "ListItem",
-    position: index + 1,
-    item: {
-      "@type": "Service",
-      name: service.title,
-      description: `${service.promise} ${service.summary}`,
-      serviceType: service.title,
-      areaServed: "Worldwide",
-      provider: {
-        "@id": `${siteConfig.url}/#person`,
+const servicesJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Google Workspace and email infrastructure services",
+    url: absoluteUrl("/services"),
+    itemListElement: services.map((service, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Service",
+        name: service.title,
+        description: `${service.promise} ${service.summary}`,
+        serviceType: service.title,
+        areaServed: "Worldwide",
+        provider: {
+          "@id": `${siteConfig.url}/#person`,
+        },
+        url: absoluteUrl("/services"),
       },
-      url: absoluteUrl("/services"),
+    })),
+  },
+  // Aggregate rating is backed by the visible Fiverr proof block and the rendered review carousel below.
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Google Workspace and email infrastructure services",
+    serviceType:
+      "Google Workspace setup, email migration, SPF/DKIM/DMARC, and deliverability repair",
+    provider: { "@id": `${siteConfig.url}/#person` },
+    url: absoluteUrl("/services"),
+    areaServed: "Worldwide",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: marketplaceProof.rating,
+      reviewCount: marketplaceProof.reviews,
+      bestRating: "5",
+      worstRating: "1",
     },
-  })),
-};
+  },
+];
 
 export default function ServicesPage() {
   return (
@@ -113,6 +134,8 @@ export default function ServicesPage() {
           ))}
         </div>
       </section>
+
+      <FiverrProof />
 
       <section className="process-panel">
         <div>

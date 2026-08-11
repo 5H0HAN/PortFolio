@@ -8,9 +8,10 @@ const contentSecurityPolicy = [
   "form-action 'self'",
   "frame-ancestors 'none'",
   "frame-src https://www.youtube-nocookie.com",
-  "img-src 'self' data: blob: https:",
+  // Keep this image/media allowlist in sync with `images.remotePatterns` below.
+  "img-src 'self' data: blob: https://commons.wikimedia.org https://upload.wikimedia.org https://images.unsplash.com https://images.pexels.com https://i.imgur.com https://*.imgbox.com https://*.giphy.com https://media.tenor.com",
   "manifest-src 'self'",
-  "media-src 'self' https:",
+  "media-src 'self' https://commons.wikimedia.org https://upload.wikimedia.org https://images.unsplash.com https://images.pexels.com https://i.imgur.com https://*.imgbox.com https://*.giphy.com https://media.tenor.com",
   "object-src 'none'",
   `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",

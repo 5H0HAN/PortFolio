@@ -48,9 +48,20 @@ const workspaceToolJsonLd = {
 };
 
 export default function WorkspaceCheckPage() {
+  const workspaceBreadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 2, name: "Tools", item: absoluteUrl("/tools") },
+      { "@type": "ListItem", position: 3, name: "Google Workspace Setup Checker", item: absoluteUrl("/tools/workspace-check") },
+    ],
+  };
+
   return (
     <div className="tool-detail-page reveal-stack">
       <JsonLd id="workspace-checker-schema" data={workspaceToolJsonLd} />
+      <JsonLd id="workspace-breadcrumb" data={workspaceBreadcrumb} />
       <section className="tool-detail-hero" aria-labelledby="workspace-title">
         <div>
           <Link className="tool-back-link" href="/tools">

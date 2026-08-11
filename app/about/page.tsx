@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import JsonLd from "@/components/json-ld";
 import {
   education,
   operatingPrinciples,
@@ -7,7 +8,7 @@ import {
   skillGroups,
   socialLinks,
 } from "@/lib/portfolio";
-import { createPageMetadata } from "@/lib/seo";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "About: Google Workspace & Email Specialist",
@@ -24,8 +25,18 @@ export const metadata: Metadata = createPageMetadata({
 export default function AboutPage() {
   const researchGate = socialLinks.find((link) => link.label === "ResearchGate");
 
+  const aboutBreadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 2, name: "About", item: absoluteUrl("/about") },
+    ],
+  };
+
   return (
     <div className="page-stack reveal-stack about-page">
+      <JsonLd id="about-breadcrumb" data={aboutBreadcrumb} />
       <section className="about-hero">
         <div>
           <p className="kicker">About / Shohan Biswas</p>

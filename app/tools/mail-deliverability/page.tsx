@@ -48,9 +48,20 @@ const deliverabilityToolJsonLd = {
 };
 
 export default function MailDeliverabilityPage() {
+  const deliverabilityBreadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 2, name: "Tools", item: absoluteUrl("/tools") },
+      { "@type": "ListItem", position: 3, name: "Mail Deliverability Test", item: absoluteUrl("/tools/mail-deliverability") },
+    ],
+  };
+
   return (
     <div className="tool-detail-page reveal-stack">
       <JsonLd id="deliverability-test-schema" data={deliverabilityToolJsonLd} />
+      <JsonLd id="deliverability-breadcrumb" data={deliverabilityBreadcrumb} />
       <section className="tool-detail-hero" aria-labelledby="deliverability-title">
         <div>
           <Link className="tool-back-link" href="/tools">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { projects } from "@/lib/portfolio";
-import { createPageMetadata } from "@/lib/seo";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/json-ld";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Email Infrastructure & Engineering Projects",
@@ -15,8 +16,18 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function ProjectsPage() {
+  const projectsBreadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 2, name: "Projects", item: absoluteUrl("/projects") },
+    ],
+  };
+
   return (
     <div className="page-stack reveal-stack">
+      <JsonLd id="projects-breadcrumb" data={projectsBreadcrumb} />
       <section className="page-hero">
         <p className="kicker">Selected work / Systems and tooling</p>
         <h1>Small systems with operational consequences.</h1>

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import JsonLd from "@/components/json-ld";
 import { operatingPrinciples, skillGroups } from "@/lib/portfolio";
-import { createPageMetadata } from "@/lib/seo";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Google Workspace, DNS & Backend Skills",
@@ -16,8 +17,18 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function SkillsPage() {
+  const skillsBreadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 2, name: "Skills", item: absoluteUrl("/skills") },
+    ],
+  };
+
   return (
     <div className="page-stack reveal-stack">
+      <JsonLd id="skills-breadcrumb" data={skillsBreadcrumb} />
       <section className="page-hero page-hero-split">
         <div>
           <p className="kicker">Capabilities / Practical, not percentage-based</p>
