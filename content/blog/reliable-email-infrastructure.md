@@ -20,17 +20,19 @@ When a small team moves its communications to Google Workspace, the biggest surp
 ## Core checks to run first
 
 1. Verify domain ownership and brand records.
-1. Create SPF record with only one hard include.
+1. Publish one SPF record that accurately includes every authorized sender.
 1. Add DKIM keys and publish the selector.
 1. Enable DMARC with a reporting-only policy before enforcing.
 
 You can use simple scripts to verify all of these in one run.
 
 ```bash
-dig +short TXT yourdomain.com | sed 's/^/SPF: /'
+dig +short TXT yourdomain.com | tr -d '"' | grep '^v=spf1'
 ```
 
 ## Why this matters
 
-Most failed deliveries are caused by a weak DNS chain, not the sending app.\
-A clean mail infrastructure creates trust with receiving servers and lowers the chance of fallback spam behavior.
+DNS and authentication gaps are common causes of rejection and spam placement, but
+they are only part of deliverability. Reputation, consent, content, and sending
+patterns matter too. A clean mail infrastructure removes avoidable technical
+failures and gives receiving systems stronger trust signals.

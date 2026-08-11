@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { cache } from "react";
 import matter from "gray-matter";
 
 export type BlogCategory =
@@ -40,16 +41,15 @@ export interface BlogPost extends BlogPostMeta {
   content: string;
 }
 
-const contentDirectory = path.join(process.cwd(), "content");
-const blogDirectory = path.join(contentDirectory, "blog");
+const blogDirectory = path.join(process.cwd(), "content/blog");
 
-function parseDate(value: unknown): string {
+function parseDate(value: unknown, field: string, fileName: string): string {
   if (value instanceof Date) {
     return value.toISOString().slice(0, 10);
   }
   if (typeof value === "number") {
     const d = new Date(value);
-    return Number.isNaN(d.getTime()) ? new Date().toISOString().slice(0, 10) : d.toISOString().slice(0, 10);
+    if (!Number.isNaN(d.getTime())) return d.toISOString().slice(0, 10);
   }
   if (typeof value === "string") {
     const d = new Date(value);
@@ -57,7 +57,7 @@ function parseDate(value: unknown): string {
       return d.toISOString().slice(0, 10);
     }
   }
-  return new Date().toISOString().slice(0, 10);
+  throw new Error(`${fileName} has an invalid or missing ${field}.`);
 }
 
 function parseTags(rawTags: unknown): string[] {
@@ -122,7 +122,10 @@ async function parsePostFile(fileName: string): Promise<BlogPost | null> {
   const slug = slugFromData || fileName.replace(/\.(md|mdx)$/, "");
 
   if (!data.title || typeof data.title !== "string") {
-    return null;
+    throw new Error(`${fileName} has an invalid or missing title.`);
+  }
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+    throw new Error(`${fileName} has an invalid slug: ${slug}.`);
   }
 
   return {
@@ -132,10 +135,10 @@ async function parsePostFile(fileName: string): Promise<BlogPost | null> {
       typeof data.excerpt === "string"
         ? data.excerpt
         : "Read the full article to learn more about this topic.",
-    date: parseDate(data.date),
+    date: parseDate(data.date, "publication date", fileName),
     updatedDate:
-      typeof data.updatedDate === "string" && data.updatedDate.trim()
-        ? data.updatedDate
+      data.updatedDate !== undefined && data.updatedDate !== null && data.updatedDate !== ""
+        ? parseDate(data.updatedDate, "updated date", fileName)
         : undefined,
     category:
       typeof data.category === "string" && data.category.trim().length > 0
@@ -159,15 +162,12 @@ async function parsePostFile(fileName: string): Promise<BlogPost | null> {
     mediaWidth: parsePositiveInteger(data.mediaWidth),
     mediaHeight: parsePositiveInteger(data.mediaHeight),
     featured: toBoolean(data.featured, false),
-    published: data.published === false ? false : true,
+    published: toBoolean(data.published, false),
     content: String(parsed.content || "").trim(),
   };
 }
 
-export async function getAllPosts(
-  options: { includeDrafts?: boolean } = {},
-): Promise<BlogPost[]> {
-  const { includeDrafts = false } = options;
+const loadPosts = cache(async (includeDrafts: boolean): Promise<BlogPost[]> => {
   const files = await loadAllBlogFiles();
   const posts = (await Promise.all(files.map(parsePostFile)))
     .filter((post): post is BlogPost => post !== null)
@@ -177,6 +177,12 @@ export async function getAllPosts(
     });
 
   return posts;
+});
+
+export async function getAllPosts(
+  options: { includeDrafts?: boolean } = {},
+): Promise<BlogPost[]> {
+  return loadPosts(Boolean(options.includeDrafts));
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
@@ -230,5 +236,6 @@ export function formatBlogDate(date: string): string {
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "UTC",
   }).format(new Date(date));
 }

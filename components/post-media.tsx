@@ -182,6 +182,8 @@ export function PostMedia({
           style={{ width: "100%", height: "auto", objectFit: "contain" }}
         />
       ) : (
+        // Unknown author-supplied hosts cannot be passed safely to Next Image.
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           className="article-media-asset"
           src={imageUrl.toString()}

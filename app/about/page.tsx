@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   education,
@@ -6,6 +7,19 @@ import {
   skillGroups,
   socialLinks,
 } from "@/lib/portfolio";
+import { createPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "About: Google Workspace & Email Specialist",
+  description:
+    "Learn about Shohan Biswas, a CSE graduate focused on Google Workspace, email authentication, migration, backend tooling, and reliable handoffs.",
+  path: "/about",
+  keywords: [
+    "Shohan Biswas",
+    "Google Workspace specialist Bangladesh",
+    "email infrastructure specialist",
+  ],
+});
 
 export default function AboutPage() {
   const researchGate = socialLinks.find((link) => link.label === "ResearchGate");

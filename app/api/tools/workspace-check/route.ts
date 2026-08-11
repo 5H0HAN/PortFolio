@@ -1,22 +1,58 @@
 import { NextRequest, NextResponse } from "next/server";
-import { runWorkspaceDiagnostic } from "@/lib/tool-checks";
+import {
+  checkRateLimit,
+  rateLimitHeaders,
+  readJsonObject,
+  RequestBodyError,
+} from "@/lib/api-guards";
+import {
+  DiagnosticInputError,
+  runWorkspaceDiagnostic,
+} from "@/lib/tool-checks";
 
-export async function POST(req: NextRequest) {
+const RATE_LIMIT = {
+  limit: 30,
+  namespace: "workspace-diagnostic",
+  windowMs: 60_000,
+};
+
+export async function POST(request: NextRequest) {
+  const rateLimit = checkRateLimit(request, RATE_LIMIT);
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "Too many diagnostic requests. Please try again shortly." },
+      { status: 429, headers: rateLimitHeaders(rateLimit) },
+    );
+  }
+
   try {
-    const body = await req.json();
-    const domain = typeof body?.domain === "string" ? body.domain.trim() : "";
-    const dkimSelector = typeof body?.dkimSelector === "string" ? body.dkimSelector.trim() : "";
+    const body = await readJsonObject(request);
+    const domain = typeof body.domain === "string" ? body.domain : "";
+    const dkimSelector =
+      typeof body.dkimSelector === "string" ? body.dkimSelector : "";
+    const report = await runWorkspaceDiagnostic(domain, dkimSelector);
 
-    if (!domain) {
-      return NextResponse.json({ error: "Domain is required." }, { status: 400 });
+    return NextResponse.json(report, {
+      status: 200,
+      headers: {
+        ...rateLimitHeaders(rateLimit),
+        "Cache-Control": "private, no-store",
+      },
+    });
+  } catch (error) {
+    if (error instanceof DiagnosticInputError || error instanceof RequestBodyError) {
+      return NextResponse.json(
+        { error: error.message },
+        {
+          status: error instanceof RequestBodyError ? error.status : 400,
+          headers: rateLimitHeaders(rateLimit),
+        },
+      );
     }
 
-    const report = await runWorkspaceDiagnostic(domain, dkimSelector);
-    return NextResponse.json(report, { status: 200 });
-  } catch {
     return NextResponse.json(
-      { error: "Workspace diagnostic failed. Check domain value and try again." },
-      { status: 500 }
+      { error: "The DNS resolver did not complete the Workspace diagnostic. Try again shortly." },
+      { status: 502, headers: rateLimitHeaders(rateLimit) },
     );
   }
 }

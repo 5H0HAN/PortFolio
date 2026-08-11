@@ -164,17 +164,23 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
-              img: ({ node: _node, ...imageProps }) => (
-                <img
-                  {...imageProps}
-                  className="markdown-inline-image"
-                  width={1600}
-                  height={900}
-                  loading="lazy"
-                  decoding="async"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                />
-              ),
+              img: ({ node, alt, ...imageProps }) => {
+                void node;
+                return (
+                  // Markdown authors can use HTTPS hosts outside Next's fixed image allowlist.
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    {...imageProps}
+                    alt={alt ?? ""}
+                    className="markdown-inline-image"
+                    width={1600}
+                    height={900}
+                    loading="lazy"
+                    decoding="async"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                  />
+                );
+              },
             }}
           >
             {post.content}
