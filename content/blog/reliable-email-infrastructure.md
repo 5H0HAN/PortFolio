@@ -15,7 +15,7 @@ featured: true
 published: true
 cover: >-
   https://www.saleshandy.com/blog/wp-content/uploads/2025/05/Email-Deliverability.webp
-mediaType: none
+mediaType: image
 mediaAlt: Email-Deliverability
 ---
 When a small team moves its communications to Google Workspace, the biggest surprise is usually deliverability. When you sent important mails to your customer and the mail doesn't reach them properly in their inbox or lands in their spam it can be really frustrating.\
