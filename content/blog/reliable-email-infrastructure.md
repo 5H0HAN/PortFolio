@@ -16,6 +16,8 @@ published: true
 cover: >-
   https://www.saleshandy.com/blog/wp-content/uploads/2025/05/Email-Deliverability.webp
 mediaType: image
+mediaUrl: >-
+  https://www.saleshandy.com/blog/wp-content/uploads/2025/05/Email-Deliverability.webp
 mediaAlt: Email-Deliverability
 ---
 When a small team moves its email to Google Workspace, one of the biggest surprises is usually **email deliverability**.
