@@ -20,8 +20,6 @@ mediaUrl: >-
   https://www.saleshandy.com/blog/wp-content/uploads/2025/05/Email-Deliverability.webp
 mediaAlt: Email-Deliverability
 ---
-![](/images/blog/reliable-email-infrastructure/image.png)
-
 When a small team moves its email to Google Workspace, one of the biggest surprises is usually **email deliverability**.
 
 You send an important email to a customer, wait for a reply... and later discover that your email never reached their inbox. Or worse, it went straight to spam. 😅
