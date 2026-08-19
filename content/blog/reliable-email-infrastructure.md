@@ -135,3 +135,5 @@ A clean email setup won't guarantee that every message lands in the inbox, but i
 And when you're sending an important proposal, invoice, password reset, or that *“just checking if you saw my previous email”* email...
 
 You definitely want it reaching the inbox. 📩😄
+
+You can check if your domain is properly configured with google workspace or not from our [**Google Workspace Setup Checker**](https://www.shohanbiswas.com/tools/workspace-check)**and [Mail Deliverability Test](https://www.shohanbiswas.com/tools/mail-deliverability).**
