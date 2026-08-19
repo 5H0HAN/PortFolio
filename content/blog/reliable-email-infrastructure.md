@@ -136,4 +136,6 @@ And when you're sending an important proposal, invoice, password reset, or that 
 
 You definitely want it reaching the inbox. 📩😄
 
-You can check if your domain is properly configured with google workspace or not from our [**Google Workspace Setup Checker**](https://www.shohanbiswas.com/tools/workspace-check)**and our [Mail Deliverability Test](https://www.shohanbiswas.com/tools/mail-deliverability)**
+You can check if your domain is properly configured with google workspace or not from our
+
+[**Google Workspace Setup Checker**](https://www.shohanbiswas.com/tools/workspace-check)**and our [Mail Deliverability Test](https://www.shohanbiswas.com/tools/mail-deliverability)**
