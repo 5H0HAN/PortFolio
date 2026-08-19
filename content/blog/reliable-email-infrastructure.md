@@ -13,9 +13,14 @@ tags:
 author: Shohan Biswas
 featured: true
 published: true
+cover: >-
+  https://www.saleshandy.com/blog/wp-content/uploads/2025/05/Email-Deliverability.webp
 mediaType: none
+mediaAlt: Email-Deliverability
 ---
-When a small team moves its communications to Google Workspace, the biggest surprise is usually **deliverability**.
+When a small team moves its communications to Google Workspace, the biggest surprise is usually deliverability. When you sent important mails to your customer and the mail doesn't reach them properly in their inbox or lands in their spam it can be really frustrating.\
+\
+Today I am gonna tell you about how to improve your domain mail deliverability from the technical point of view.
 
 ## Core checks to run first
 
