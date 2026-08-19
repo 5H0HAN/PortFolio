@@ -17,6 +17,9 @@ cover: https://i.ibb.co.com/8nJZfsp0/image.png
 mediaType: image
 mediaUrl: https://i.ibb.co.com/8nJZfsp0/image.png
 mediaAlt: Email-Deliverability
+mediaCaption: >-
+  Email deliverability is the ability to get your emails into your recipient’s
+  primary inbox, rather than the spam folder or promotions tab. 
 ---
 When a small team moves its email to Google Workspace, one of the biggest surprises is usually **email deliverability**.
 
