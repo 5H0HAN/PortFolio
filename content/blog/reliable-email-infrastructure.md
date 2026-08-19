@@ -22,6 +22,8 @@ When a small team moves its communications to Google Workspace, the biggest surp
 \
 Today I am gonna tell you about how to improve your domain mail deliverability from the technical point of view.
 
+First your business domain needs a proper MX
+
 ## Core checks to run first
 
 1. Verify domain ownership and brand records.
