@@ -13,11 +13,9 @@ tags:
 author: Shohan Biswas
 featured: true
 published: true
-cover: >-
-  https://www.saleshandy.com/blog/wp-content/uploads/2025/05/Email-Deliverability.webp
+cover: https://i.ibb.co.com/8nJZfsp0/image.png
 mediaType: image
-mediaUrl: >-
-  https://www.saleshandy.com/blog/wp-content/uploads/2025/05/Email-Deliverability.webp
+mediaUrl: https://i.ibb.co.com/8nJZfsp0/image.png
 mediaAlt: Email-Deliverability
 ---
 When a small team moves its email to Google Workspace, one of the biggest surprises is usually **email deliverability**.
