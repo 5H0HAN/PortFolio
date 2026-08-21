@@ -18,9 +18,19 @@ const optimizedImageHosts = new Set([
   "media.tenor.com",
 ]);
 
-function getSafeHttpsUrl(value?: string) {
+type SafeUrlResult =
+  | { isLocal: true; path: string }
+  | URL
+  | null;
+
+function getSafeHttpsUrl(value?: string): SafeUrlResult {
   if (!value) {
     return null;
+  }
+
+  // Handle local paths (starting with /)
+  if (value.startsWith("/")) {
+    return { isLocal: true, path: value };
   }
 
   try {
@@ -57,7 +67,7 @@ function getCanonicalImageUrl(url: URL) {
   return url;
 }
 
-function getImageDimensions(url: URL, width?: number, height?: number) {
+function getImageDimensions(url: string | URL, width?: number, height?: number) {
   if (
     Number.isInteger(width) &&
     Number.isInteger(height) &&
@@ -67,7 +77,8 @@ function getImageDimensions(url: URL, width?: number, height?: number) {
     return { width: Number(width), height: Number(height) };
   }
 
-  if (url.pathname.endsWith("/Email_Authentication_03d.png")) {
+  const path = typeof url === "string" ? url : url.pathname;
+  if (path.endsWith("/Email_Authentication_03d.png")) {
     return { width: 606, height: 124 };
   }
 
@@ -89,7 +100,7 @@ function getImageOrientation({
 
 function getYouTubeEmbedUrl(value?: string) {
   const url = getSafeHttpsUrl(value);
-  if (!url) {
+  if (!url || "isLocal" in url) {
     return null;
   }
 
@@ -137,15 +148,17 @@ export function PostMedia({
     return null;
   }
 
+  const isLocal = "isLocal" in safeUrl;
   const youtubeUrl = type === "youtube" ? getYouTubeEmbedUrl(url) : null;
   if (type === "youtube" && !youtubeUrl) {
     return null;
   }
-  const imageUrl = getCanonicalImageUrl(safeUrl);
+
+  const imageUrl = isLocal ? safeUrl.path : getCanonicalImageUrl(safeUrl);
   const imageDimensions = getImageDimensions(imageUrl, width, height);
   const imageOrientation = getImageOrientation(imageDimensions);
   const shouldOptimizeImage =
-    type === "image" && canOptimizeImage(imageUrl);
+    type === "image" && (isLocal || canOptimizeImage(safeUrl));
 
   return (
     <figure
@@ -162,7 +175,7 @@ export function PostMedia({
         />
       ) : type === "video" ? (
         <video
-          src={safeUrl.toString()}
+          src={isLocal ? safeUrl.path : safeUrl.toString()}
           controls
           playsInline
           preload="metadata"
@@ -171,7 +184,7 @@ export function PostMedia({
       ) : shouldOptimizeImage ? (
         <Image
           className="article-media-asset"
-          src={imageUrl.toString()}
+          src={typeof imageUrl === "string" ? imageUrl : imageUrl.toString()}
           alt={alt}
           width={imageDimensions.width}
           height={imageDimensions.height}
@@ -186,14 +199,14 @@ export function PostMedia({
         // eslint-disable-next-line @next/next/no-img-element
         <img
           className="article-media-asset"
-          src={imageUrl.toString()}
+          src={typeof imageUrl === "string" ? imageUrl : imageUrl.toString()}
           alt={alt}
           width={imageDimensions.width}
           height={imageDimensions.height}
           loading="eager"
           decoding="async"
           fetchPriority="high"
-          crossOrigin="anonymous"
+          crossOrigin={isLocal ? undefined : "anonymous"}
           referrerPolicy="no-referrer"
           style={{ width: "100%", height: "auto", objectFit: "contain" }}
         />
