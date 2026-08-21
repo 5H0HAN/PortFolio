@@ -9,7 +9,7 @@ const contentSecurityPolicy = [
   "frame-ancestors 'none'",
   "frame-src https://www.youtube-nocookie.com",
   // Keep this image/media allowlist in sync with `images.remotePatterns` below.
-  "img-src 'self' data: blob: https://commons.wikimedia.org https://upload.wikimedia.org https://images.unsplash.com https://images.pexels.com https://i.imgur.com https://*.imgbox.com https://*.giphy.com https://media.tenor.com https://inputidea.com",
+  "img-src 'self' data: blob: https://commons.wikimedia.org https://upload.wikimedia.org https://images.unsplash.com https://images.pexels.com https://i.imgur.com https://*.imgbox.com https://*.giphy.com https://media.tenor.com",
   "manifest-src 'self'",
   "media-src 'self' https://commons.wikimedia.org https://upload.wikimedia.org https://images.unsplash.com https://images.pexels.com https://i.imgur.com https://*.imgbox.com https://*.giphy.com https://media.tenor.com",
   "object-src 'none'",
