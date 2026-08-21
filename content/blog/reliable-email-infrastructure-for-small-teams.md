@@ -15,7 +15,7 @@ featured: true
 published: true
 cover: https://i.ibb.co.com/8nJZfsp0/image.png
 mediaType: image
-mediaUrl: https://inputidea.com/wp-content/uploads/email-deliverability-101.webp
+mediaUrl: /images/email-deliverability-101.webp
 mediaAlt: Email-Deliverability
 mediaCaption: >-
   Email deliverability is the ability to get your emails into your recipient’s
