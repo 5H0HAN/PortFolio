@@ -13,6 +13,7 @@ tags:
 author: Shohan Biswas
 featured: true
 published: true
+cover: https://i.ibb.co.com/8nJZfsp0/image.png
 mediaType: image
 mediaUrl: https://i.ibb.co.com/8nJZfsp0/image.png
 mediaAlt: Email-Deliverability
